@@ -1,0 +1,19 @@
+{
+  "name": "moshi-moshi",
+  "version": "1.0.0",
+  "description": "amqp wrapper for Req/Rep pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schleumer/moshi-moshi"
+  },
+  "author": "Wesley Schleumer de Góes",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/schleumer/moshi-moshi/issues"
+  },
+  "homepage": "https://github.com/schleumer/moshi-moshi"
+}
