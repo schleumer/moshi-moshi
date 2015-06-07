@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/schleumer/moshi-moshi/issues"
   },
-  "homepage": "https://github.com/schleumer/moshi-moshi"
+  "homepage": "https://github.com/schleumer/moshi-moshi",
+  "dependencies": {
+    "amqp": "^0.2.4",
+    "bluebird": "^2.9.27"
+  }
 }
