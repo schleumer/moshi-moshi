@@ -8,3 +8,12 @@ Each created queue has one response queue, which receive messages from the excha
 it's like [LeanKit-Labs/wascally](https://github.com/LeanKit-Labs/wascally)
 but using [postwait/node-amqp](https://github.com/postwait/node-amqp)
 and made by a totally amateur programmer :bowtie:
+
+
+## i
+
+
+## liek
+
+
+## headerz
