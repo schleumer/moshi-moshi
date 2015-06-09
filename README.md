@@ -9,7 +9,7 @@ it's like [LeanKit-Labs/wascally](https://github.com/LeanKit-Labs/wascally)
 but using [postwait/node-amqp](https://github.com/postwait/node-amqp)
 and made by a totally amateur programmer :bowtie:
 
-And yes, it's a unexpected behaviour of an message queue service. But who cares?
+And yes, it's a unexpected behaviour of an message queue service, unless we are talking about [RPC](https://www.rabbitmq.com/direct-reply-to.html). But who cares?
 
 
 # Brainstorm

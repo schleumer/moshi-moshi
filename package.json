@@ -2,9 +2,10 @@
   "name": "moshi-moshi",
   "version": "1.0.0",
   "description": "amqp wrapper for Req/Rep pattern",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test --compilers ls:livescript",
+    "test-watch": "mocha test --compilers ls:livescript --watch"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,11 @@
   "dependencies": {
     "amqp": "^0.2.4",
     "bluebird": "^2.9.27"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "chai-as-promised": "^5.1.0",
+    "livescript": "^1.4.0",
+    "mocha": "^2.2.5"
   }
 }
