@@ -4,9 +4,10 @@
 
 ## no code yet
 
-Each created queue has one response queue, which receive messages from the exchange with some especial routing key,
+Each created queue has one response queue, which receive messages from the sender,
+while asker wait for response on response queue,
 it's like [LeanKit-Labs/wascally](https://github.com/LeanKit-Labs/wascally)
-but using [postwait/node-amqp](https://github.com/postwait/node-amqp)
+but using [postwait/node-amqp](https://github.com/postwait/node-amqp) as backend
 and made by a totally amateur programmer :bowtie:
 
 And yes, it's a unexpected behaviour of an message queue service, unless we are talking about [RPC](https://www.rabbitmq.com/direct-reply-to.html). But who cares?

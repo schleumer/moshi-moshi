@@ -1,3 +1,11 @@
-export class Queue
-  (@connection, @queue-name, @routing-keys, @queue-options) ->
-  
+require! {
+  'events' : { EventEmitter }
+}
+
+export class Queue extends EventEmitter
+  (@queue, @exchange, @routing-keys, @queue-options) ->
+    console.log "queue #{@queue.name} created"
+    @routing-keys.for-each (key) ~>
+      @queue.bind @exchange, key
+    @queue.subscribe (message) ~>
+      console.log message

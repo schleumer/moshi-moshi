@@ -1,9 +1,9 @@
 require! {
   \amqp
-  \bluebird : Q
+  \bluebird : Promise
   './connection' : { Connection }
 }
 
 module.exports = (host, exchange-name, options) ->
-  new Q (resolve, reject) ->
+  new Promise (resolve, reject) ->
     resolve (new Connection host, exchange-name, options .connect!)
