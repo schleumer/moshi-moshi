@@ -49,6 +49,13 @@ export class Connection
   # listen to a single message within queue and routing key(s) and close that queue
   # this may be useful for: ...
   listen-and-die: (queue-name, routing-keys = ['#'], queue-options = {}) -> ...
+
+  dial: (routing-key, message, publish-options) ->
+    new Promise (resolve, reject) ~>
+      result <~ @exchange.publish routing-key, message, publish-options
+      console.log result
+      resolve result
+
   hang: ->
     new Promise (resolve, reject) ~>
       # i hope if this one fails it throws an error

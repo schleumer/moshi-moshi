@@ -7,5 +7,5 @@ export class Queue extends EventEmitter
     console.log "queue #{@queue.name} created"
     @routing-keys.for-each (key) ~>
       @queue.bind @exchange, key
-    @queue.subscribe (message) ~>
-      console.log message
+    @queue.subscribe (message, a, b, c, d) ~>
+      @emit 'message', message
