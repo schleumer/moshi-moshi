@@ -1,5 +1,6 @@
 require! {
   'events' : { EventEmitter }
+  './message' : { Message }
 }
 
 export class Queue extends EventEmitter

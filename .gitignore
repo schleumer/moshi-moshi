@@ -29,3 +29,5 @@ node_modules
 
 test1.ls
 test2.ls
+
+.DS_Store
