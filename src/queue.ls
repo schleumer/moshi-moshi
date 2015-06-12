@@ -18,7 +18,7 @@ export class Queue extends EventEmitter
       @raw-queue.subscribe do
         @raw-options
         (message, headers, delivery-info, message-object) ~>
-          @emit 'message' new Message do
+          @emit \message new Message do
             message
             headers
             delivery-info

@@ -5,9 +5,14 @@ export class Message
   # XXX: if you send a string you receive Buffer, because 
   # strings has no content-type, nuff said.
   (@raw-message, @headers, @delivery-info, @message-object, @can-ack = no) ->
+    # DIRTY:
+    if @headers?.\x-timestamp
+      # in microseconds
+      @delay = new Date!get-time! - @headers.\x-timestamp
+    else
+      @delay = 0
     @body = @raw-message
 
   ack: (ack-previous = no) -> 
     if @can-ack
-      console.log 'hehe'
       @message-object.acknowledge ack-previous

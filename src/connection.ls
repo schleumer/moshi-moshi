@@ -56,13 +56,15 @@ export class Connection
           queue.on 'message' (message) ~>
             resolve message
             queue.destroy!catch (err) ->
-              console.log err
               console.log 'an error ocurred while destroying a queue'
 
-  dial: (routing-key, message, publish-options) ->
+  dial: (routing-key, message, publish-options = {}) ->
     new Promise (resolve, reject) ~>
+      publish-options.headers ?= {}
+      publish-options.headers.\x-timestamp ?= new Date!get-time!
       result <~ @exchange.publish routing-key, message, publish-options
-      console.log result
+      # i don't know what is going on here nor what the
+      # callback does, but i'll keep it.
       resolve result
 
   hang: ->
