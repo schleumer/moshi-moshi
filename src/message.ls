@@ -4,7 +4,7 @@ export class Message
   # a buffer when content-type is application/octet-stream
   # XXX: if you send a string you receive Buffer, because 
   # strings has no content-type, nuff said.
-  (@raw-message, @headers, @delivery-info, @message-object, @can-ack = no) ->
+  (@connection, @raw-message, @headers, @delivery-info, @message-object, @can-ack = no) ->
     # DIRTY:
     if @headers?.\x-timestamp
       # in microseconds

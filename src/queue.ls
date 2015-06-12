@@ -4,7 +4,7 @@ require! {
 }
 
 export class Queue extends EventEmitter
-  (@raw-queue, @exchange, @routing-keys, @queue-options) ->
+  (@raw-queue, @connection, @routing-keys, @queue-options) ->
     @queue-options = {
       auto-ack: true,
       prefetch-count: 1
@@ -14,16 +14,24 @@ export class Queue extends EventEmitter
       prefetchCount: @queue-options.prefetch-count # it's okay to be undefined
     }
     @routing-keys.for-each (key) ~>
-      @raw-queue.bind @exchange, key
+      @raw-queue.bind @connection.exchange, key
       @raw-queue.subscribe do
         @raw-options
         (message, headers, delivery-info, message-object) ~>
           @emit \message new Message do
+            @connection
             message
             headers
             delivery-info
             message-object
             not @queue-options.auto-ack
+  
   destroy: ->
     resolve, _ <~ new Promise!
     resolve @raw-queue.destroy!
+
+  first: ->
+    resolve, reject <~ new Promise!
+    @on 'message', (message) ~>
+      resolve message
+      @destroy!
