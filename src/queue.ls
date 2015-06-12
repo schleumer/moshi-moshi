@@ -4,9 +4,26 @@ require! {
 }
 
 export class Queue extends EventEmitter
-  (@queue, @exchange, @routing-keys, @queue-options) ->
-    console.log "queue #{@queue.name} created"
+  (@raw-queue, @exchange, @routing-keys, @queue-options) ->
+    @queue-options = {
+      auto-ack: true,
+      prefetch-count: 1
+    } <<< @queue-options
+    @raw-options = {
+      ack: not @queue-options.auto-ack # auto-ack = true, ack = false
+      prefetchCount: @queue-options.prefetch-count # it's okay to be undefined
+    }
     @routing-keys.for-each (key) ~>
-      @queue.bind @exchange, key
-    @queue.subscribe (message, a, b, c, d) ~>
-      @emit 'message', message
+      @raw-queue.bind @exchange, key
+      @raw-queue.subscribe do
+        @raw-options
+        (message, headers, delivery-info, message-object) ~>
+          @emit 'message' new Message do
+            message
+            headers
+            delivery-info
+            message-object
+            not @queue-options.auto-ack
+  destroy: ->
+    resolve, _ <~ new Promise!
+    resolve @raw-queue.destroy!

@@ -42,13 +42,22 @@ export class Connection
       # and also will create a new channel on server, without destroying
       # the previously created
       try
-        resolve new Queue queue, @exchange, routing-keys, queue-options
+        resolve 
+          <| new Queue queue, @exchange, routing-keys, queue-options
       catch
         reject e
 
-  # listen to a single message within queue and routing key(s) and close that queue
+  # listen to a single message within queue and routing key(s) and destroy that queue
   # this may be useful for: ...
-  listen-and-die: (queue-name, routing-keys = ['#'], queue-options = {}) -> ...
+  listen-and-die: (queue-name, routing-keys = ['#'], queue-options = {}) ->
+    new Promise (resolve, reject) ~>
+      @with-queue queue-name, routing-keys, queue-options
+        .then (queue) ~>
+          queue.on 'message' (message) ~>
+            resolve message
+            queue.destroy!catch (err) ->
+              console.log err
+              console.log 'an error ocurred while destroying a queue'
 
   dial: (routing-key, message, publish-options) ->
     new Promise (resolve, reject) ~>
