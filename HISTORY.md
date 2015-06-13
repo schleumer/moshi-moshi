@@ -1,6 +1,9 @@
 a long, long, long time ago...
 ==============================
 
+1.0.3
+
+* added cancellable to `Connection::ask`
 
 1.0.2
 -----
