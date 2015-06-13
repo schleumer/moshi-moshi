@@ -1,6 +1,6 @@
 {
   "name": "moshi-moshi",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "amqp wrapper for Req/Rep pattern",
   "main": "dist/index.js",
   "scripts": {

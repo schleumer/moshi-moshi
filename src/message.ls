@@ -1,3 +1,7 @@
+require! {
+  \bluebird : Promise
+}
+
 export class Message
   # TODO: process message body the right way, because raw-message
   # could be a file, image, etc. it's not only JSON. It could be
