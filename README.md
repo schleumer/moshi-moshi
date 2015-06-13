@@ -1,8 +1,6 @@
 # README desu
 
-## THIS IS A EXTREME EXPERIMENTAL MODULE SO PLEASE DON'T USE IT
-
-## no code yet
+## THIS IS A EXPERIMENTAL PACKAGE
 
 Each created queue has one response queue, which receive messages from the sender,
 while asker wait for response on response queue,
@@ -13,7 +11,7 @@ and made by a totally amateur programmer :bowtie:
 And yes, it's a unexpected behaviour of an message queue service, unless we are talking about [RPC](https://www.rabbitmq.com/direct-reply-to.html). But who cares?
 
 
-# Brainstorm
+# Proposal
 
 ```
 var phone = require('moshi-moshi');

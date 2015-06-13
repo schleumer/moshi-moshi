@@ -1,11 +1,12 @@
 {
   "name": "moshi-moshi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "amqp wrapper for Req/Rep pattern",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha test --compilers ls:livescript",
-    "test-watch": "mocha test --compilers ls:livescript --watch"
+    "test-watch": "mocha test --compilers ls:livescript --watch",
+    "build": "./node_modules/livescript/bin/lsc --debug -cbo dist/ src/"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,9 @@
     "chai-as-promised": "^5.1.0",
     "livescript": "^1.4.0",
     "mocha": "^2.2.5"
-  }
+  },
+  "files": [
+    "README.md",
+    "dist/"
+  ]
 }

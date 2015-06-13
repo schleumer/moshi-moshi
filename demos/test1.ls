@@ -8,7 +8,11 @@ call.then (connection) ->
       queue.on 'message' (message) ->
         console.log message.body
         connection.dial 'key2', { 'test': '2' }
+      
       connection
-        .dial 'key2', { 'test': '1' }
-        #.then (message) ->
-        #  console.log message.body
+        .ask 'key2', { 'test': '1' }
+        .then (message) ->
+          console.log message.delay, message.body
+        .catch (err) ->
+          console.log err
+

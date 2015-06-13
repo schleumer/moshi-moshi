@@ -32,6 +32,6 @@ export class Queue extends EventEmitter
 
   first: ->
     resolve, reject <~ new Promise!
-    @on 'message', (message) ~>
+    @once 'message', (message) ~>
       resolve message
       @destroy!

@@ -2,10 +2,15 @@ require! {
   \bluebird : Promise
   \amqp
   './queue' : { Queue }
+  './utils' : { uuid }
 }
 
 export class Connection
   # connection constructor, you know what a constructor do, don't you?
+  # REMEMBER:
+  # each connection with exchange cost 1 channel
+  # each queue cost 1 channel
+  # channels = n-queues + 1
   # @param {srting} host: host
   # @param {string} exchange-name: exchange-name
   # @param {object} options: connection options, default = {}
@@ -47,14 +52,30 @@ export class Connection
       catch
         reject e
 
-  dial: (routing-key, message, publish-options = {}) ->
+  dial: (routing-key, message, publish-options = {}, will-reply = no) ->
     new Promise (resolve, reject) ~>
       publish-options.headers ?= {}
       publish-options.headers.\x-timestamp ?= new Date!get-time!
-      result <~ @exchange.publish routing-key, message, publish-options
-      # i don't know what is going on here nor what the
-      # callback does, but i'll keep it.
-      resolve result
+      if will-reply
+        temp-name = (x) -> "temp-#{x}-for-reply-#{uuid!}"
+        temp-route = temp-name \route
+        temp-queue = temp-name \queue
+        publish-options.headers.\Reply-To ?= temp-route
+        # YEAH YEAH IT'S QUITE WRONG, SORRY
+        resolve do
+          # to avoid delay, i will wait till queue creation to publish a message
+          @with-queue temp-queue, [temp-route]
+            .then (queue) ~>
+              @exchange.publish routing-key, message, publish-options
+              queue.first!
+      else
+        result <~ @exchange.publish routing-key, message, publish-options
+        # i don't know what is going on here nor what the
+        # callback does, but i'll keep it.
+        resolve result
+
+  ask: (routing-key, message, publish-options = {}, will-reply = yes) ->
+    @dial routing-key, message, publish-options, will-reply
 
   hang: ->
     new Promise (resolve, reject) ~>

@@ -13,6 +13,14 @@ export class Message
       @delay = 0
     @body = @raw-message
 
+  # TODO: MAKE THIS HARD AND COMPLEX
+  reply: (body) ->
+    resolve, reject <~ new Promise!
+    if @headers.\Reply-To
+      @connection.dial @headers.\Reply-To, body
+    else
+      reject new Error("No Reply-To header found")
+
   ack: (ack-previous = no) -> 
     if @can-ack
       @message-object.acknowledge ack-previous
