@@ -71,7 +71,7 @@ out$.Connection = Connection = (function(){
         tempRoute = tempName('route');
         tempQueue = tempName('queue');
         (ref$ = publishOptions.headers)['Reply-To'] == null && (ref$['Reply-To'] = tempRoute);
-        return resolve(this$.withQueue(tempQueue, [tempRoute]).then(function(queue){
+        return resolve(this$.withQueue(tempQueue, [tempRoute], {}).then(function(queue){
           this$.exchange.publish(routingKey, message, publishOptions);
           return queue.first();
         }));

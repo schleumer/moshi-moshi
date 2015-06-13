@@ -57,7 +57,7 @@ export class Connection
       publish-options.headers ?= {}
       publish-options.headers.\x-timestamp ?= new Date!get-time!
       if will-reply
-        temp-name = (x) -> "temp-#{x}-for-reply-#{uuid!}"
+        temp-name = (x) -> "temp-#{x}-#{uuid!}"
         temp-route = temp-name \route
         temp-queue = temp-name \queue
         publish-options.headers.\Reply-To ?= temp-route
@@ -66,9 +66,11 @@ export class Connection
           # to avoid delay, i will wait till queue creation to publish a message
           @with-queue temp-queue, [temp-route], {}
             .then (queue) ~>
+              #diiiiiiiirty
+              ret = queue.first!
               @exchange.publish routing-key, message, publish-options
-              queue
-                .first!
+              ret
+              
       else
         result <~ @exchange.publish routing-key, message, publish-options
         # i don't know what is going on here nor what the

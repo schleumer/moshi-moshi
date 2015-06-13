@@ -23,3 +23,11 @@ call.then (connection) !->
         console.log 'short-lived' message.body
 
       connection.dial 'key1' {  'test': 'upalele' }
+
+[1 to 18].map (x) ->
+  phone 'localhost' 'tests'
+    .then (c) ->
+      c.with-queue "test-2-#{x}", ["key2-#{x}"]
+        .then (q) ->
+          q.on 'message' (message) ->
+            message.reply [x, new Date!get-time!]
