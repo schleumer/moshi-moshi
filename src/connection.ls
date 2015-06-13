@@ -64,10 +64,11 @@ export class Connection
         # YEAH YEAH IT'S QUITE WRONG, SORRY
         resolve do
           # to avoid delay, i will wait till queue creation to publish a message
-          @with-queue temp-queue, [temp-route]
+          @with-queue temp-queue, [temp-route], {}
             .then (queue) ~>
               @exchange.publish routing-key, message, publish-options
-              queue.first!
+              queue
+                .first!
       else
         result <~ @exchange.publish routing-key, message, publish-options
         # i don't know what is going on here nor what the

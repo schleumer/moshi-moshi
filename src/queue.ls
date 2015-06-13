@@ -1,6 +1,7 @@
 require! {
   'events' : { EventEmitter }
   './message' : { Message }
+  'bluebird' : Promise
 }
 
 export class Queue extends EventEmitter
@@ -30,8 +31,14 @@ export class Queue extends EventEmitter
     resolve, _ <~ new Promise!
     resolve @raw-queue.destroy!
 
-  first: ->
-    resolve, reject <~ new Promise!
-    @once 'message', (message) ~>
-      resolve message
+  first: (timeout = 2000ms)->
+    new Promise (resolve, reject) ~>
+      @once 'message', (message) ~>
+        resolve message
+        @destroy!
+    .cancellable!
+    .timeout timeout
+    .catch (err) ~>
       @destroy!
+      # pass the error ahead because i'm really bad to design flows
+      throw new Error("queue destroyed due #{err}")

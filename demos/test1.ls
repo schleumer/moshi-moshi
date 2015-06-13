@@ -15,4 +15,3 @@ call.then (connection) ->
           console.log message.delay, message.body
         .catch (err) ->
           console.log err
-
