@@ -34,6 +34,7 @@ export class Queue extends EventEmitter
   first: (timeout = 2000ms)->
     new Promise (resolve, reject) ~>
       @once 'message', (message) ~>
+        console.log message.delivery-info.routingKey
         resolve message
         @destroy!
     .cancellable!
@@ -41,4 +42,4 @@ export class Queue extends EventEmitter
     .catch (err) ~>
       @destroy!
       # pass the error ahead because i'm really bad to design flows
-      throw new Error("queue destroyed due #{err}")
+      throw new Error("queue #{@raw-queue.name} destroyed due #{err}")

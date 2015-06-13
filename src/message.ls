@@ -12,12 +12,15 @@ export class Message
     else
       @delay = 0
     @body = @raw-message
+    # for the lazy
+    @routing-key = @delivery-info.routing-key
 
   # TODO: MAKE THIS HARD AND COMPLEX
   reply: (body) ->
     resolve, reject <~ new Promise!
-    if @headers.\Reply-To
-      @connection.dial @headers.\Reply-To, body
+    if @delivery-info.reply-to
+      console.log 'Replying to ' + @delivery-info.reply-to
+      @connection.dial @delivery-info.reply-to, body
     else
       reject new Error("No Reply-To header found")
 
