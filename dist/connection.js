@@ -61,16 +61,17 @@ out$.Connection = Connection = (function(){
     publishOptions == null && (publishOptions = {});
     willReply == null && (willReply = false);
     return new Promise(function(resolve, reject){
-      var ref$, tempName, tempRoute, tempQueue;
+      var ref$, id, tempName, tempRoute, tempQueue;
       publishOptions.headers == null && (publishOptions.headers = {});
       (ref$ = publishOptions.headers)['x-timestamp'] == null && (ref$['x-timestamp'] = new Date().getTime());
       if (willReply) {
+        id = uuid();
         tempName = function(x){
-          return "temp-" + x + "-for-reply-" + uuid();
+          return "temp-" + x + "-" + id;
         };
         tempRoute = tempName('route');
         tempQueue = tempName('queue');
-        (ref$ = publishOptions.headers)['Reply-To'] == null && (ref$['Reply-To'] = tempRoute);
+        publishOptions.replyTo == null && (publishOptions.replyTo = tempRoute);
         return resolve(this$.withQueue(tempQueue, [tempRoute], {}).then(function(queue){
           this$.exchange.publish(routingKey, message, publishOptions);
           return queue.first();

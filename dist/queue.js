@@ -37,12 +37,13 @@ out$.Queue = Queue = (function(superclass){
     timeout == null && (timeout = 2000);
     return new Promise(function(resolve, reject){
       return this$.once('message', function(message){
+        console.log(message.deliveryInfo.routingKey);
         resolve(message);
         return this$.destroy();
       });
     }).cancellable().timeout(timeout)['catch'](function(err){
       this$.destroy();
-      throw new Error("queue destroyed due " + err);
+      throw new Error("queue " + this$.rawQueue.name + " destroyed due " + err);
     });
   };
   return Queue;

@@ -17,12 +17,14 @@ out$.Message = Message = (function(){
       this.delay = 0;
     }
     this.body = this.rawMessage;
+    this.routingKey = this.deliveryInfo.routingKey;
   }
   prototype.reply = function(body){
     var this$ = this;
     return new Promise(function(resolve, reject){
-      if (this$.headers['Reply-To']) {
-        return this$.connection.dial(this$.headers['Reply-To'], body);
+      if (this$.deliveryInfo.replyTo) {
+        console.log('Replying to ' + this$.deliveryInfo.replyTo);
+        return this$.connection.dial(this$.deliveryInfo.replyTo, body);
       } else {
         return reject(new Error("No Reply-To header found"));
       }
