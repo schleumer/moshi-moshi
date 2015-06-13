@@ -51,3 +51,10 @@ phone('exchange', /*...amqp connection info*/)
 
 
 ```
+
+
+# TODO
+
+* CANCELLABLE EVERYTHING
+* code style
+* find a good naming convention
