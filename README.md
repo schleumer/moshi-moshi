@@ -13,7 +13,7 @@ And yes, it's a unexpected behaviour of an message queue service, unless we are 
 
 # Proposal
 
-```
+```javascript
 var phone = require('moshi-moshi');
 
 // receiver
@@ -51,12 +51,3 @@ phone('exchange', /*...amqp connection info*/)
 
 
 ```
-
-
-## i
-
-
-## liek
-
-
-## headerz
